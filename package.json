@@ -1,0 +1,56 @@
+{
+  "name": "nodejs-starter-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./src/backend/server.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "format": "prettier --write .",
+    "lint": "eslint src --fix ",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farooq-teqniqly/nodejs-starter-template.git"
+  },
+  "author": "farooq-teqniqly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farooq-teqniqly/nodejs-starter-template/issues"
+  },
+  "homepage": "https://github.com/farooq-teqniqly/nodejs-starter-template#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@eslint/js": "^9.14.0",
+    "@jest/globals": "^29.7.0",
+    "babel-jest": "^29.7.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.9.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "husky": "^8.0.0",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.10",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "supertest": "^7.0.0"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}

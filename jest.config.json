@@ -1,0 +1,9 @@
+{
+  "testEnvironment": "node",
+  "verbose": true,
+  "transform": {
+    "^.+\\.js?$": "babel-jest"
+  },
+  "transformIgnorePatterns": ["/node_modules/"],
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
+}
