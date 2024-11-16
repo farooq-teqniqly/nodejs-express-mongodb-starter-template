@@ -7,5 +7,6 @@
   "transformIgnorePatterns": ["/node_modules/"],
   "globalSetup": "<rootDir>/globalSetup.js",
   "setupFilesAfterEnv": ["<rootDir>/setupFilesAfterEnv.js"],
-  "globalTeardown": "<rootDir>/globalTeardown.js"
+  "globalTeardown": "<rootDir>/globalTeardown.js",
+  "testPathIgnorePatterns": ["/node_modules/", "/src/backend/__tests__/utils/"]
 }
