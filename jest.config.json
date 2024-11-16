@@ -6,6 +6,6 @@
   },
   "transformIgnorePatterns": ["/node_modules/"],
   "globalSetup": "<rootDir>/globalSetup.js",
-  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+  "setupFilesAfterEnv": ["<rootDir>/setupFilesAfterEnv.js"],
   "globalTeardown": "<rootDir>/globalTeardown.js"
 }
