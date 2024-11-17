@@ -46,4 +46,18 @@ const createUser = async ({ username, password }, idGen) => {
   }
 };
 
-export { createUser };
+const getUser = async ({ username }) => {
+  if (!username) {
+    throw new Error("username is required");
+  }
+
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    return errorResult("user not found");
+  }
+
+  return successResult("user found", user);
+};
+
+export { createUser, getUser };

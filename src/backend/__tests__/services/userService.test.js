@@ -38,3 +38,27 @@ describe("createUser", () => {
     expect(result.message).toEqual("user already exists");
   });
 });
+
+describe("getUser", () => {
+  test("returns the user", async () => {
+    const userData = generator.generateUser();
+    const idGen = () => generator.generateId();
+
+    let result = await userService.createUser(userData, idGen);
+
+    expect(result.success).toEqual(true);
+
+    result = await userService.getUser({ username: userData.username });
+
+    expect(result.success).toEqual(true);
+    expect(result.message).toEqual("user found");
+    expect(result.value).toEqual(expect.objectContaining(userData));
+  });
+
+  test("returns not found if the user does not exist", async () => {
+    const result = await userService.getUser({ username: "foo" });
+
+    expect(result.success).toEqual(false);
+    expect(result.message).toEqual("user not found");
+  });
+});
