@@ -42,7 +42,8 @@ describe("createUser", () => {
 describe("getUser", () => {
   test("returns the user", async () => {
     const userData = generator.generateUser();
-    const idGen = () => generator.generateId();
+    const userId = generator.generateId();
+    const idGen = () => userId;
 
     let result = await userService.createUser(userData, idGen);
 
@@ -52,7 +53,12 @@ describe("getUser", () => {
 
     expect(result.success).toEqual(true);
     expect(result.message).toEqual("user found");
-    expect(result.value).toEqual(expect.objectContaining(userData));
+
+    const foundUser = result.value;
+    expect(foundUser).toEqual(expect.objectContaining(userData));
+    expect(foundUser.id).toEqual(userId);
+    expect(foundUser).toHaveProperty("createdAt");
+    expect(foundUser).toHaveProperty("updatedAt");
   });
 
   test("returns not found if the user does not exist", async () => {
