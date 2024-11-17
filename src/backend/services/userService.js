@@ -34,7 +34,7 @@ const createUser = async ({ username, password }, idGen) => {
       return errorResult("user already exists");
     }
 
-    const id = idGen({ username });
+    const id = await idGen({ username });
     const user = new User({ id, username, password });
     const createdUser = await user.save();
 

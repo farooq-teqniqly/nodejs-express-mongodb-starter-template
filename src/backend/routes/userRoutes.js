@@ -1,4 +1,5 @@
 import * as userService from "../services/userService.js";
+import { generateHash } from "../../utils/utils.js";
 
 /**
  * Registers user-related routes with the provided Express application.
@@ -17,7 +18,7 @@ export const userRoutes = (app) => {
     try {
       const createUserResult = await userService.createUser(
         req.body,
-        () => "1234",
+        async () => await generateHash(req.body.username),
       );
 
       if (createUserResult.success === true) {
