@@ -1,6 +1,19 @@
 import { User } from "../../utils/mongodb/schemas.js";
 import { errorResult, successResult } from "./results.js";
 
+/**
+ * Asynchronously creates a new user.
+ *
+ * @param {Object} options - The user details.
+ * @param {string} options.username - The username of the new user.
+ * @param {string} options.password - The password of the new user.
+ * @param {Function} idGen - Function to generate a unique ID for the user.
+ *
+ * @throws {Error} If the username, password, or idGen function is not provided.
+ * @throws {Error} If there is an error during the user creation process.
+ *
+ * @returns {Promise<Object>} A promise that resolves to the result of the user creation process, either success or error.
+ */
 const createUser = async ({ username, password }, idGen) => {
   if (!username) {
     throw new Error("username is required");
