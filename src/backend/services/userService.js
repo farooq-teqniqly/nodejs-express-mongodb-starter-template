@@ -19,15 +19,15 @@ import { errorResult, successResult } from "./results.js";
  */
 const createUser = async ({ username, password }, idGen) => {
   if (!username) {
-    return errorResult("username is required");
+    throw new Error("username is required");
   }
 
   if (!password) {
-    return errorResult("password is required");
+    throw new Error("password is required");
   }
 
   if (!idGen) {
-    return errorResult("id generator function is required");
+    throw new Error("id generator function is required");
   }
 
   try {
@@ -65,7 +65,7 @@ const createUser = async ({ username, password }, idGen) => {
  */
 const getUser = async ({ username }) => {
   if (!username) {
-    return errorResult("username is required");
+    throw new Error("username is required");
   }
 
   const user = await User.findOne({ username });

@@ -1,5 +1,33 @@
 import * as userService from "../services/userService.js";
 import { generateHash } from "../../utils/utils.js";
+import { check, validationResult } from "express-validator";
+
+/**
+ * An array of validation rules to validate user input fields.
+ *
+ * The array contains validation rules for the following fields:
+ *
+ * - "username": Ensures the input is a valid email, and its length
+ *                is between 5 and 100 characters.
+ * - "password": Ensures the input is a string, and its length
+ *                is between 5 and 50 characters.
+ *
+ * Each rule uses the express-validator library's `check` function
+ * to define the validation constraints and corresponding error messages.
+ */
+const userValidationRules = [
+  check("username")
+    .isEmail()
+    .withMessage("username is required")
+    .isLength({ min: 5, max: 100 })
+    .withMessage("username must be between 10 and 100 characters long"),
+
+  check("password")
+    .isString()
+    .withMessage("password is required")
+    .isLength({ min: 5, max: 50 })
+    .withMessage("password must be between 5 and 50 characters long"),
+];
 
 /**
  * Registers user-related routes with the provided Express application.
@@ -14,7 +42,13 @@ import { generateHash } from "../../utils/utils.js";
  * If an internal server error occurs, it responds with status 500.
  */
 export const userRoutes = (app) => {
-  app.post("/api/v1/users", async (req, res) => {
+  app.post("/api/v1/users", userValidationRules, async (req, res) => {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+      return res.status(422).json({ errors: validationErrors.array() });
+    }
+
     try {
       const createUserResult = await userService.createUser(
         req.body,
@@ -27,7 +61,7 @@ export const userRoutes = (app) => {
           .json({ username: createUserResult.value.username });
       }
 
-      return res.status(400).json(createUserResult);
+      return res.status(422).json(createUserResult);
     } catch (err) {
       console.error("userRoutes.post error", err);
       return res.status(500).end();

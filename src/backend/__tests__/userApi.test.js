@@ -22,7 +22,7 @@ describe("POST /api/v1/users", () => {
     expect(updatedAt).toBeUndefined();
   });
 
-  test("return 400 if user exists", async () => {
+  test("return 422 if user exists", async () => {
     const postData = generator.generateUser();
 
     await request(app)
@@ -36,9 +36,33 @@ describe("POST /api/v1/users", () => {
       .post("/api/v1/users")
       .send(postData)
       .set("Accept", "application/json")
-      .expect(400)
+      .expect(422)
       .expect("Content-Type", /json/);
 
     expect(res.body.message).toEqual("user already exists");
+  });
+});
+
+describe("POST /api/v1/users tests for invalid requests", () => {
+  test("required props not specified", async () => {
+    const postData = {};
+
+    const res = await request(app)
+      .post("/api/v1/users")
+      .send(postData)
+      .set("Accept", "application/json")
+      .expect(422)
+      .expect("Content-Type", /json/);
+
+    const { errors } = res.body;
+    expect(errors.length).toEqual(4);
+    expect(errors[0].msg).toEqual("username is required");
+    expect(errors[1].msg).toEqual(
+      "username must be between 10 and 100 characters long",
+    );
+    expect(errors[2].msg).toEqual("password is required");
+    expect(errors[3].msg).toEqual(
+      "password must be between 5 and 50 characters long",
+    );
   });
 });
